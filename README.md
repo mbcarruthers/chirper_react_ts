@@ -30,11 +30,11 @@ Make sure all route endpoints work in Postman
     * /chirp/:id/admin for the page that displays a chirp edit form
     * /chirp/add for the page to add a new chirp
 * Any component that is presented by the Router (e.g. your "pages") will have access to `this.props.history`. This is necessary to kick off navigation from your code. (in response to something being completed, etc.)
-    * `this.props.history.push('/something')` allows you to navigate to the page that responds to the path /something
+    * `this.props.history.push('/something')` allows you to navigate to the page that responds to the path `/something`
     * `this.props.history.replace('/something')` can be used to navigate to that path, but not keep a record of where we currently are (we are replacing the current browser history entry, with this new page we are going to. This is useful if we don't want someone to be able to click the back button and return to this page)
     * `this.props.history.goBack()` can be used to navigate back one page in the browser history
 
 ## Running the project
-In order to run the server, use `npm run dev`, and the server will start on port 3000 (http://localhost:3000). 
+In order to run the server, use `npm run dev`, and the server will start on port 3000 (http://localhost:8080). 
 
 Webpack will watch the files. Once you save a file, you can refresh your browser to ensure you got the updated client files. If you only change server files, you *shouldn't* need to refresh.
