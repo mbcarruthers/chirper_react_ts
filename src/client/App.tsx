@@ -1,45 +1,32 @@
 import * as React from 'react';
 import { Component } from "react";
+import Chirps from "./Components/Chirps";
+import { Route , Switch , BrowserRouter } from "react-router-dom";
+import NavigationBar from "./Components/NavigationBar";
+import Detail from "./Components/Detail";
 
-// class App extends React.Component<IAppProps, IAppState> {
-// 	constructor(props: IAppProps) {
-// 		super(props);
-// 		this.state = {
-// 			name: null
-// 		};
-// 	}
-//
-// 	async componentDidMount() {
-// 		try {
-// 			let r = await fetch('/api/hello');
-// 			let name = await r.json();
-// 			this.setState({ name });
-// 		} catch (error) {
-// 			console.log(error);
-// 		}
-// 	}
-//
-// 	render() {
-// 		return (
-// 			<main className="container my-5">
-// 				<h1 className="text-primary text-center">Hello {this.state.name}!</h1>
-// 			</main>
-// 		);
-// 	}
-// }
-//
-// export interface IAppProps {}
-//
-// export interface IAppState {
-// 	name: string;
-// }
+//TODO: will eventually need to move away from having the app have state
+// and break this down into seperate parts
 
 export default class App extends Component<IAppProps, IAppState> {
+	constructor( props : IAppProps ) {
+		super(props);
+		console.log("Useless constructor for App");
+	}
+	componentDidMount() {
+		console.log("App component has mounted");
+	}
 	render() {
 		return(
-			<div className="container text-center">
-				<h1>This is working correctly</h1>
-			</div>
+			<>
+				<NavigationBar/>
+				<BrowserRouter>
+					<Switch>
+						<Route exact path="/" component={Chirps} />
+						<Route path="/:id" component={Detail} />
+					</Switch>
+				</BrowserRouter>
+			</>
 		)
 	}
 }
