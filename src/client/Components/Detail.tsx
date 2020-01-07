@@ -15,7 +15,9 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
                 user : null ,
                 text : null
             }
-        }
+        };
+        this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.updateText = this.updateText.bind(this);
     }
       componentDidMount() {
             fetch(`/api/chirps/${this.props.match.params.id}`)
@@ -36,42 +38,37 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
                 .catch( err => console.log(err) );
     }
 
-    //TODO: need a way to push a button and have it changed, not just start typing it out and
-    // have it change as the user types
-    updateText = ( event : React.ChangeEvent<HTMLInputElement> ) => {
-       const text = event.target.value;
+
+    updateText = (text : string ) => {
        this.setState({
            chirp : {
-               ...this.state.chirp,
-               text
+               id : this.state.chirp.id ,
+               user : this.state.chirp.user ,
+               text : text
            }
        });
-        console.log(this.state.chirp);
-    }; // --> onChange={this.updateText}
+    };
 
-    /* render method iim trying to get to work */
+
     render() {
         return(
-            <section className="container-fluid">
+            <section className="container-fluid border m-2">
                 <div className="form-group">
                     <h4>User : { this.state.chirp.user }</h4>
                     <p>{ this.state.chirp.text }</p>
                     <label htmlFor="id">Change Message</label>
-                    <input type="text" className="form-control" defaultValue={this.state.chirp.text}
-                    onChange={this.updateText}/>
+                    <input type="text" className="form-control" defaultValue={this.state.chirp.text} id="input-form" />
+                    <button className="btn btn-outline-primary mt-2" onClick={this.handleMessageChange}>Change Message</button>
                 </div>
             </section>
         )
     }
-    /* test render method to see console.log's */
-    // render() {
-    //     console.log("Detail render called");
-    //     return(
-    //         <div className="container">
-    //             <h1>This is working</h1>
-    //         </div>
-    //     )
-    // }
+    handleMessageChange = () => {
+        const text = document.getElementById("input-form").value; // IDE gives me an error but it works
+        this.updateText(text);
+        console.log(this.state.chirp);
+
+    }
  }
 
 interface IDetailProps extends RouteComponentProps<{id : string }> {}
