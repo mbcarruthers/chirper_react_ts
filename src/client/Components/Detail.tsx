@@ -3,8 +3,6 @@ import { Component } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { IChirp } from "./Chirps";
 
-//TODO: trying to get detailed chirps to show but they are not showing up in time
-// for the render method to be called and it thinks that chirps are null. Fuck you too.
 export default class Detail extends Component<IDetailProps, IDetailState> {
     constructor( props : IDetailProps ) {
         super(props);
@@ -38,7 +36,8 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
                 .catch( err => console.log(err) );
     }
 
-
+    // TODO: why does it take pressing two times for the
+    // state to actually change
     updateText = (text : string ) => {
        this.setState({
            chirp : {
@@ -63,15 +62,26 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
             </section>
         )
     }
-    handleMessageChange = () => {
-        const text = document.getElementById("input-form").value; // IDE gives me an error but it works
+    handleMessageChange = ( event : React.MouseEvent<HTMLButtonElement> ) => {
+        const text = (document.querySelector("#input-form") as HTMLInputElement).value;
+        console.log(text);
         this.updateText(text);
-        console.log(this.state.chirp);
-
-    }
+        // fetch(`/api/chirps/:${this.state.chirp.id}`, {
+        //     method : "PUT",
+        //     headers : {
+        //         "Content-type":"application/json"
+        //     },
+        //     body : JSON.stringify(this.state.chirp),
+        // }).then( (res) => {
+        //     return res.json();
+        // }).then( (data) => {
+        //     console.log(`Success , ${data}`);
+        // }).catch( err => alert(err)); //alert for now , change to console.log
+        // console.log(JSON.stringify(this.state.chirp));
+         }
  }
 
-interface IDetailProps extends RouteComponentProps<{id : string }> {}
+interface IDetailProps extends RouteComponentProps<{ id : string }> {}
 interface IDetailState {
     chirp : IChirp;
 }
