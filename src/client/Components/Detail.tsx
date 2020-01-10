@@ -18,7 +18,7 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
         this.updateText = this.updateText.bind(this);
     }
       componentDidMount() {
-            fetch(`/api/chirps/${this.props.match.params.id}`)
+            fetch(`/api/chirps/${this.props.match.params.id}/`)
                 .then( (res) => {
                     return res.json();
                 })
@@ -38,7 +38,7 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
 
     // TODO: why does it take pressing two times for the
     // state to actually change
-    updateText = (text : string ) => {
+    updateText = ( text : string ) => {
        this.setState({
            chirp : {
                id : this.state.chirp.id ,
@@ -46,6 +46,19 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
                text : text
            }
        });
+       const chirp_body = {
+           user : this.state.chirp.user , text : this.state.chirp.text
+        };
+       fetch(`/api/chirps/${this.props.match.params.id}`, {
+           method : "PUT" ,
+           headers : {
+               "Content-Type" : "application/json"
+           },
+           body : JSON.stringify(chirp_body)
+       }).then( res => res.json())
+           .then( (data) => {
+               console.log(`Success : ${data}`);
+           }).catch(err => console.log(err));
     };
 
 
@@ -64,20 +77,8 @@ export default class Detail extends Component<IDetailProps, IDetailState> {
     }
     handleMessageChange = ( event : React.MouseEvent<HTMLButtonElement> ) => {
         const text = (document.querySelector("#input-form") as HTMLInputElement).value;
-        console.log(text);
         this.updateText(text);
-        // fetch(`/api/chirps/:${this.state.chirp.id}`, {
-        //     method : "PUT",
-        //     headers : {
-        //         "Content-type":"application/json"
-        //     },
-        //     body : JSON.stringify(this.state.chirp),
-        // }).then( (res) => {
-        //     return res.json();
-        // }).then( (data) => {
-        //     console.log(`Success , ${data}`);
-        // }).catch( err => alert(err)); //alert for now , change to console.log
-        // console.log(JSON.stringify(this.state.chirp));
+
          }
  }
 

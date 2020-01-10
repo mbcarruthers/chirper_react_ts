@@ -20,7 +20,7 @@ router.post("/", (req , res) => {
 });
 
 router.put("/:id?" , (req , res) => {
-    chirpStore.UpdateChirp( req.params.id , req.body);
+    chirpStore.UpdateChirp( req.params.id , req.body );
     res.sendStatus(200);
 });
 

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Component } from "react";
-import { Link } from "react-router-dom"; //<-- gives error , used anchor tag instead for now
+import { Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 
 export default class Chirps extends Component<IChirpProps , IChirpState> {
     constructor( props : IChirpProps ) {
@@ -9,6 +10,7 @@ export default class Chirps extends Component<IChirpProps , IChirpState> {
             chirps : new Array<IChirp>()
         }
     }
+
     async componentDidMount() {
         await fetch("/api/chirps") // does the await need to be there?
             .then( (res) => {
@@ -25,6 +27,7 @@ export default class Chirps extends Component<IChirpProps , IChirpState> {
             this.setState({
                 chirps : chirps
             });
+            this.props.history.replace("/");
         }).catch( err => console.log(err));
     }
     render() {
@@ -55,7 +58,8 @@ export interface IChirp {
     user : string;
     text : string; //TODO:change all text's to message
 }
-interface IChirpProps {}
+interface IChirpProps extends RouteComponentProps {}
+
 interface IChirpState {
     chirps : Array<IChirp>
 }
