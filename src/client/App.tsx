@@ -4,7 +4,7 @@ import Chirps from "./Components/Chirps";
 import { Route , Switch , BrowserRouter } from "react-router-dom";
 import NavigationBar from "./Components/NavigationBar";
 import Detail from "./Components/Detail";
-
+import AddChirp from "./Components/AddChirp";
 //TODO: will eventually need to move away from having the app have state
 // and break this down into seperate parts
 
@@ -20,6 +20,7 @@ export default class App extends Component<IAppProps, IAppState> {
 		return(
 			<>
 				<NavigationBar/>
+				<AddChirp />
 				<BrowserRouter>
 					<Switch>
 						<Route exact path="/" component={Chirps} />
